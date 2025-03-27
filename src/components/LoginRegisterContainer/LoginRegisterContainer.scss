@@ -1,0 +1,50 @@
+// login-Register.scss
+.login-Register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .login-form-card {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .form-container {
+        max-width: 400px;
+        width: 100%;
+        height: auto;
+        padding: 21px;
+        // border: 1px solid #ccc;
+        // border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    
+        .logo {
+            margin-top: 20px;
+            text-align: center;
+
+            img {
+                max-width: 100%;
+                width: 200px;
+                height: 60px;
+                height: auto;
+            }
+        }
+
+        // Styling for switching between login and register
+        .switch-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+            text-decoration: underline;
+            cursor: pointer;
+
+            &:hover {
+                color: #555;
+            }
+        }
+    }
+}
