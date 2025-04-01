@@ -220,6 +220,9 @@
     border: solid 1px #edf2f7;
 }
 
+.p-10 {
+    padding: 10px !important;
+}
 .p-4 {
     padding: 1rem;
 }
@@ -355,16 +358,19 @@
 }
 
 .driver-container {
-    width: 1000px;
+    width: 30%;
     justify-content: end;
-    display: flex;
+    display: block;
+    margin-right: 20px;
+    text-align: left;
 }
 
 .driver-content {
     text-align: right;
     justify-content: end;
     display: flex;
-    margin-left: 0px !important
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }
 
 .driver-info-content {
@@ -464,6 +470,42 @@
     border-bottom: 1px solid #383E5026
 }
 
+.pl-20 {
+    padding-right: 20px !important;
+    padding-left: 20px !important;
+}
+
+.pr-20 {
+    padding-right: 20px !important;
+    padding-left: 20px !important;
+}
+
+.custom-input {
+    border-color: #383E5026;
+    width: 185px;
+    padding: 5px;
+    /* border-radius: 20px; */
+}
+
+.custom-button {
+    cursor: pointer;
+    background: #0A7AFF;
+    color: white;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+.custom-white-button {
+    cursor: pointer;
+    background: white;
+    color: black;
+    border: solid 1px #383E5026;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+}
+
 /* Custom Checkbox Container */
 .custom-checkbox {
     position: relative;
@@ -473,12 +515,31 @@
     cursor: pointer;
 }
 
+.ml-0 {
+    margin-left: 0px !important
+}
+.mr-0 {
+    margin-right: 0px !important
+}
+
 /* Hide Default Checkbox */
 .custom-checkbox input {
     position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
+}
+.align-center {
+    align-items: center;
+}
+
+.manger-button-groups-container {
+    align-items: center;
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+    border: solid 1px #383E5026;
+    margin-right: 0px;
 }
 
 /* Default Checkbox Look (Unchecked - Red Outline) */
