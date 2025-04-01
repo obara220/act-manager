@@ -139,7 +139,13 @@
 .departure-custom-card {
     border-right: 1px solid #e2e8f0;
     border-left: 1px solid #e2e8f0;
+    border: solid 1px #e2e8f0;
+    align-items: center;
+    justify-content: center;
     width: 50%;
+    padding: 20px;
+    text-align: left;
+    margin-right: 10px;
 }
 
 .p-6 {
@@ -316,8 +322,8 @@
 }
 
 .col-span-3-layout {
-    width: 240px;
-    height: 94px;
+    width: 260px;
+    /* height: 94px; */
     text-align: left;
 }
 
@@ -344,7 +350,7 @@
     font-weight: 300;
     font-size: 40px;
     line-height: 100%;
-    text-align: right;
+    text-align: left;
     font-family: 'Roboto', sans-serif;
 }
 
@@ -358,6 +364,7 @@
     text-align: right;
     justify-content: end;
     display: flex;
+    margin-left: 0px !important
 }
 
 .driver-info-content {
@@ -372,8 +379,10 @@
     border-bottom: solid 1px #383E5026;
 }
 
-.more-info-button {
+.more-detail-button {
     cursor: pointer;
+    background: #0A7AFF;
+    color: white;
 }
 
 /* Modal Overlay */

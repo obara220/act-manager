@@ -17,7 +17,6 @@ function HeaderContainer() {
         // setCustomerId(undefined);
         // history.push("/login"); // Adjust the route if needed
         navigate("/login"); // Use navigate to redirect to the login page
-
     };
 
     return (
@@ -28,9 +27,9 @@ function HeaderContainer() {
                 </div>
                 <div>
                     <h1 className="header-title">
-                        Welcome, <span>Jhon Doe</span>
+                        Welcome, <span>Mike Joe</span>
                     </h1>
-                    <p className="header-subtitle">Your transportation details at a glance.</p>
+                    <p className="header-subtitle">Los Angeles, CA</p>
                 </div>
             </div>
             <div className="flex items-center justify-between">
@@ -48,10 +47,7 @@ function HeaderContainer() {
                     <FaSignOutAlt className="logout-icon" onClick={handleLogout} />
                 </div>
             </div>
-
         </div>
-
-
     );
 }
 

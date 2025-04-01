@@ -6,6 +6,24 @@ import Map from "../../images/map.png"
 import Vehicle from "../../images/vehicle.svg"
 import DriverLicense from "../../images/california-license.png";
 import './index.css'
+import {
+    MDBBtn,
+    MDBContainer,
+    MDBCard,
+    MDBCardBody,
+    MDBCol,
+    MDBRow,
+    MDBInput,
+    MDBCheckbox,
+    MDBDropdown,
+    MDBDropdownToggle,
+    MDBDropdownMenu,
+    MDBDropdownItem,
+    MDBIcon
+}
+    from 'mdb-react-ui-kit';
+
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 const CrewContainer = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,38 +65,47 @@ const CrewContainer = () => {
                 {/* Flight Details */}
                 <div className="flex justify-between grid grid-cols-3 gap-4 text-center border-b pb-4 flight-details-container">
                     <div className="col-span-3 col-span-3-layout mb-4">
-                        <p className="text-xl font-semibold">Upcoming Flight Details</p>
+                        <p className="text-xl font-semibold">Quick Overview</p>
+                        <div className="justify-between p-4 rounded-lg flex items-center more-detail-button">
+                            <div>
+                                <span>Your Drivers Details</span>
+                            </div>
+                            <div>
+                                <FaArrowRight />
+                            </div>
+                            {/* <button className="mt-3 flex items-center space-x-2 text-blue-600">
+                            </button> */}
+                        </div>
                     </div>
-                    <div className="flex w-50 departure-block">
-                        <div className="w-50">
-                            <p className="text-gray-500">Flight Number</p>
-                            <p className="text-lg font-semibold">2251</p>
+                    <div className="flex w-50 mb-4">
+                        <div className="w-50 departure-custom-card rounded-lg">
+                            <p className="text-gray-500">Active drivers</p>
+                            <p className="text-lg font-semibold">25</p>
                         </div>
-                        <div className="departure-custom-card">
-                            <p className="text-gray-500">Departure Time</p>
-                            <p className="text-lg font-semibold">3.15 PM</p>
+                        <div className="departure-custom-card rounded-lg">
+                            <p className="text-gray-500">Assigned rides</p>
+                            <p className="text-lg font-semibold">19</p>
                         </div>
-                        <div className="w-50">
-                            <p className="text-gray-500">Arrival Time</p>
-                            <p className="text-lg font-semibold">7.00 PM</p>
+                        <div className="w-50 departure-custom-card rounded-lg">
+                            <p className="text-gray-500">Available vehicles</p>
+                            <p className="text-lg font-semibold">6</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Live Driver Update */}
-                <div className="driver-content">
-                    <div className="text-center driver-container py-6">
+                <div className="driver-content m-4">
+                    <div className="text-center driver-container mr-4">
                         <p className="text-location">
-                            Your driver is on the way and will arrive at your location in
-                            approximately <span className="text-blue-600 font-bold">5 minutes</span>.
+                            Driver Roster & Assignment Overview
                         </p>
                     </div>
+                    <div className="w-50 departure-custom-card rounded-lg"></div>
+                    <div className="w-50 departure-custom-card rounded-lg"></div>
                 </div>
 
                 {/* Driver Info & Map Section */}
-                <div className="flex justify-between grid grid-cols-3 gap-6"
-
-                >
+                <div className="flex justify-between grid grid-cols-3 gap-6">
                     {/* Driver Info */}
                     <div className="driver-info-content">
                         <div className="bg-gray-200 p-3 rounded-lg flex flex-col items-center mb-4" style={{ height: '249px' }}>

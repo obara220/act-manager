@@ -17,6 +17,10 @@ import {
   MDBRow,
   MDBInput,
   MDBCheckbox,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
   MDBIcon
 }
   from 'mdb-react-ui-kit';
@@ -26,6 +30,10 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 function Login(props) {
   const dispatch = useDispatch(); // Initialize dispatch
+  const [selectedLocation, setSelectedLocation] = useState("");
+
+  const locations = ["New York", "Los Angeles", "Chicago", "Houston", "Miami"];
+
 
   let [uname, setUname] = useState("");
   let [password, setPass] = useState("");
@@ -113,16 +121,16 @@ function Login(props) {
     setPass(event.target.value);
   }
   const handleFind = () => {
-    if (flightNumber === "123") {
+    // if (flightNumber === "123") {
       // window.location.reload(); // Refresh the page
       setError("");
-      navigate("/crew"); // Use navigate to redirect to the login page
+      navigate("/manager"); // Use navigate to redirect to the login page
       dispatch(setUserAuth(true));
 
-    } else {
-      setError("Invalid flight number!"); // Show error message
+    // } else {
+    //   setError("Invalid flight number!"); // Show error message
 
-    }
+    // }
   }
 
   const changeFlightNumber = (event) => {
@@ -132,13 +140,13 @@ function Login(props) {
   return (
     <>
       <div className="login-container" style={{ paddingBottom: error ? '0px' : '22px' }}>
-        <h1>CREW LOG IN</h1>
+        <h1>MANAGER LOG IN</h1>
         {!nextStep &&
           <p>Welcome back!</p>
         }
         {nextStep &&
           <div style={{ marginTop: '20px', marginBottom: '45px' }}>
-            <p>Welcome back! <span>John Dae</span></p>
+            <p>Select your service location to manage drivers, vehicles, and schedules efficiently.</p>
           </div>
         }
 
@@ -160,14 +168,26 @@ function Login(props) {
         }
         {nextStep &&
           <>
-            <MDBInput wrapperClass='mb-4' label='Flight Number' id='form2' type='text' value={flightNumber} onChange={changeFlightNumber} />
+            <MDBContainer className="location-dropdown">
+              <select
+                className="form-control"
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+              >
+                <option value="" disabled>Select Location</option>
+                {locations.map((location, index) => (
+                  <option key={index} value={location}>{location}</option>
+                ))}
+              </select>
+            </MDBContainer>
+            {/* <MDBInput wrapperClass='mb-4' label='Flight Number' id='form2' type='text' value={flightNumber} onChange={changeFlightNumber} /> */}
             {error && <div className="error-message">{error}</div>}
             <MDBBtn
               className={`w-100 mb-68 ${error ? "mb-58" : ""}`}
               size='md'
               onClick={handleFind}
             >
-              Find
+              Continue
             </MDBBtn>
           </>
         }

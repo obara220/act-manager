@@ -54,7 +54,7 @@ console.log(isUserAuthenticatedRedux, '---redux--')
         {/* Protect routes that require authentication */}
         {isUserAuthenticatedRedux ? (
           <>
-            <Route path="/crew" element={<CrewContainer />} />
+            <Route path="/manager" element={<CrewContainer />} />
             {/* <Route path="/dashboard" element={<AdminCustomerContainer />} /> */}
           </>
         ) : (
