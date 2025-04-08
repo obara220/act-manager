@@ -9,11 +9,15 @@ import logo from "./Login.png"
 // Initialization for ES Users
 import HeaderContainer from "./components/CrewDashboard/HeaderContainer";
 import CrewContainer from "./components/CrewDashboard/CrewContainer";
+import DriverDetail from "./components/DriverDetails/DriverDetail";
+import DriverNew from "./components/DriverDetails/DriverNew"
+import DriverCredentials from "./components/DriverDetails/DriverCredentials";
+import VehicleAssignment from "./components/DriverDetails/VehicleAssignment";
+import AirlineAdd from "./components/DriverDetails/AirlineAdd";
 
 function App() {
   const [isUserAuthenticated, setUserAuthorization] = useState(false);
   const isUserAuthenticatedRedux = useSelector((state) => state.auth.isAuthenticated); // Access Redux state
-console.log(isUserAuthenticatedRedux, '---redux--')
   const [isAdmin, setAdmin] = useState(
     sessionStorage.getItem("isAdmin") === "true" || false
   );
@@ -55,6 +59,11 @@ console.log(isUserAuthenticatedRedux, '---redux--')
         {isUserAuthenticatedRedux ? (
           <>
             <Route path="/manager" element={<CrewContainer />} />
+            <Route path="/driver-detail" element={<DriverDetail />} />
+            <Route path="/driver-new" element={<DriverNew />} />
+            <Route path="/driver-credentials" element={<DriverCredentials />} />
+            <Route path="/vehicle-assignment" element={<VehicleAssignment />} />
+            <Route path="/airline-add" element={<AirlineAdd />} />
             {/* <Route path="/dashboard" element={<AdminCustomerContainer />} /> */}
           </>
         ) : (

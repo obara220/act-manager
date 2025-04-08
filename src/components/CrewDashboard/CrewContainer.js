@@ -5,6 +5,8 @@ import Driver from "../../images/Male.png"
 import Map from "../../images/map.png"
 import Vehicle from "../../images/vehicle.svg"
 import DriverLicense from "../../images/california-license.png";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 import './index.css'
 import {
     MDBBtn,
@@ -29,6 +31,8 @@ import {
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 const CrewContainer = () => {
+    const navigate = useNavigate(); // Use useNavigate instead of useHistory
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [safetyCheck, setSafetyCheck] = useState({
         clean: true,
@@ -110,6 +114,10 @@ const CrewContainer = () => {
         );
     };
 
+    const onDriverDetail = () => {
+        navigate("/driver-detail");
+    }
+
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="p-6 w-full pr-6 pl-6">
@@ -117,7 +125,7 @@ const CrewContainer = () => {
                 <HeaderContainer />
 
                 {/* Flight Details */}
-                <div className="flex justify-between grid grid-cols-3 gap-4 text-center border-b pb-4 flight-details-container">
+                <div onClick={onDriverDetail} className="flex justify-between grid grid-cols-3 gap-4 text-center border-b pb-4 flight-details-container">
                     <div className="col-span-3 col-span-3-layout mb-4">
                         <p className="text-xl font-semibold">Quick Overview</p>
                         <div className="justify-between p-4 rounded-lg flex items-center more-detail-button">
@@ -421,7 +429,8 @@ const CrewContainer = () => {
                             ))}
                         </MDBTableBody>
                     </MDBTable>
-                </div>           {/* Driver Info & Map Section */}
+                </div>
+                {/* Driver Info & Map Section */}
                 {/* <div className="flex justify-between grid grid-cols-3 gap-6">
                     <div className="driver-info-content">
                         <div className="bg-gray-200 p-3 rounded-lg flex flex-col items-center mb-4" style={{ height: '249px' }}>
