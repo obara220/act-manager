@@ -14,6 +14,7 @@ import DriverNew from "./components/DriverDetails/DriverNew"
 import DriverCredentials from "./components/DriverDetails/DriverCredentials";
 import VehicleAssignment from "./components/DriverDetails/VehicleAssignment";
 import AirlineAdd from "./components/DriverDetails/AirlineAdd";
+import ImportData from "./components/DriverDetails/ImportData";
 
 function App() {
   const [isUserAuthenticated, setUserAuthorization] = useState(false);
@@ -64,6 +65,7 @@ function App() {
             <Route path="/driver-credentials" element={<DriverCredentials />} />
             <Route path="/vehicle-assignment" element={<VehicleAssignment />} />
             <Route path="/airline-add" element={<AirlineAdd />} />
+            <Route path="/import-data" element={<ImportData />} />
             {/* <Route path="/dashboard" element={<AdminCustomerContainer />} /> */}
           </>
         ) : (

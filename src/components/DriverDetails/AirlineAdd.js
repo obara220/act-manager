@@ -196,7 +196,7 @@ const AirlineAdd = () => {
                     </div>
 
                     <div className="flex justify-between mt-4 save-button">
-                        <div click={handleSave} className="justify-between p-2 pr-20 pl-20 rounded-lg mr-1 flex items-center custom-blue-button">
+                        <div onClick={handleSave} className="justify-between p-2 pr-20 pl-20 rounded-lg mr-1 flex items-center custom-blue-button">
                             <span>Save</span>
                         </div>
                         <div>
