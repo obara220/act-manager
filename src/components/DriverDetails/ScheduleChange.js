@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Driver from "../../images/Male.png";
 import "./index.css";
 
-const ImportData = () => {
+const ScheduleChange = () => {
     const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -42,8 +42,8 @@ const ImportData = () => {
             </div>
             {/* Top Section */}
             <div className="items-center mt-5 personal-info-content">
-                <p className="font-semibold text-lg">Import Data</p>
-                <span>Easily upload driver, vehicle, and flight data in bulk. Ensure accuracy by using the provided template format.</span>
+                <p className="font-semibold text-lg">Schedule Change</p>
+                {/* <span>Easily upload driver, vehicle, and flight data in bulk. Ensure accuracy by using the provided template format.</span> */}
                 <div className="w-100 mt-4 rounded-lg">
                     <div className="flex justify-between mb-2">
                         <div>
@@ -78,4 +78,4 @@ const ImportData = () => {
     );
 };
 
-export default ImportData;
+export default ScheduleChange;

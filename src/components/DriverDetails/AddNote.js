@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Driver from "../../images/Male.png";
 import "./index.css";
 
-const ImportData = () => {
+const AddNote = () => {
     const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -42,16 +42,16 @@ const ImportData = () => {
             </div>
             {/* Top Section */}
             <div className="items-center mt-5 personal-info-content">
-                <p className="font-semibold text-lg">Import Data</p>
-                <span>Easily upload driver, vehicle, and flight data in bulk. Ensure accuracy by using the provided template format.</span>
+                <p className="font-semibold text-lg">Add Note</p>
+                {/* <span>Easily upload driver, vehicle, and flight data in bulk. Ensure accuracy by using the provided template format.</span> */}
                 <div className="w-100 mt-4 rounded-lg">
                     <div className="flex justify-between mb-2">
                         <div>
-                            <p>Upload</p>
+                            <p>Note to Driver</p>
                         </div>
                         <div className="flex justify-between w-35">
                             <select className="custom-input w-100 rounded-lg">
-                                <option>Air Crew Transport, Inc</option>
+                                <option>Add any important notes or special instructions here..</option>
                             </select>
                         </div>
                     </div>
@@ -59,7 +59,7 @@ const ImportData = () => {
 
                     <div className="flex justify-between mt-4 save-button">
                         <div click={handleSave} className="justify-between p-2 pr-20 pl-20 rounded-lg mr-1 flex items-center custom-blue-button">
-                            <span>Import</span>
+                            <span>Save</span>
                         </div>
                         <div>
                             {/* <select className="custom-input rounded-lg"> 
@@ -78,4 +78,4 @@ const ImportData = () => {
     );
 };
 
-export default ImportData;
+export default AddNote;

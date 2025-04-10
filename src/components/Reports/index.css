@@ -242,7 +242,9 @@
 .w-6 {
     width: 6rem;
 }
-
+.w-60 {
+    width: 60%;
+}
 .rounded-lg {
     border-radius: 0.5rem;
 }
@@ -367,7 +369,7 @@
 
 .driver-content {
     text-align: right;
-    justify-content: end;
+    justify-content: space-between;
     display: flex;
     margin-left: 0px !important;
     margin-right: 0px !important;
@@ -385,9 +387,6 @@
     border-bottom: solid 1px #383E5026;
 }
 
-.cursor-pointer {
-    cursor: pointer;
-}
 .more-detail-button {
     cursor: pointer;
     background: #0A7AFF;
@@ -477,7 +476,9 @@
     padding-right: 20px !important;
     padding-left: 20px !important;
 }
-
+.pr-2 {
+    padding-right: 2rem;
+}
 .pr-20 {
     padding-right: 20px !important;
     padding-left: 20px !important;

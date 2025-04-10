@@ -118,6 +118,21 @@ const CrewContainer = () => {
         navigate("/driver-detail");
     }
 
+    const handleReport = () => {
+        navigate("/reports");
+    }
+    const handleFlightStatus = () => {
+        navigate("/flight-status");
+    }
+    const handleScheduleChange = () => {
+        navigate("/schedule-change");
+    }
+    const handleAddNote = () => {
+        navigate("/add-note");
+    }
+    const handleAdminLogin = () => {
+        navigate("/login");
+    }
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="p-6 w-full pr-6 pl-6">
@@ -326,43 +341,43 @@ const CrewContainer = () => {
                 </div>
 
                 <div className="manger-button-groups-container p-2 rounded-lg mb-4 justify-between">
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Repair</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Add</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Assign Ride</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Delete</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Import</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Charts</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Admin</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Undo</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div onClick={handleReport} className="flex align-center cursor-pointer">
                         <p className="mb-0">Report</p>
                     </div>
 
-                    <div className="flex align-center">
+                    <div className="flex align-center cursor-pointer">
                         <p className="mb-0">Refresh</p>
                     </div>
                 </div>
@@ -422,8 +437,9 @@ const CrewContainer = () => {
                                     <td className="p-10">{row.pass_value}</td>
                                     <td className="p-10">{row.pu_value}</td>
                                     <td className="p-10">{row.do_value}</td>
-                                    <td className="p-10">edit</td>
+                                    <td onClick={toggleModal} className="cursor-pointer p-10">edit</td>
                                     <td className="p-10">{row.delay_value}</td>
+
                                     {/* <td>{row.d}</td> */}
                                 </tr>
                             ))}
@@ -501,94 +517,52 @@ const CrewContainer = () => {
                 {/* Modal */}
                 {isModalOpen && (
                     <div className="modal-overlay">
-                        <div className="modal-container">
+                        <div className="modal-container w-50">
                             <div className="modal-header">
                                 {/* <h2 className="text-xl font-semibold">Driver & Vehicle Information</h2> */}
                                 <button className="modal-close" onClick={toggleModal}>
                                     <FaTimes size={20} />
                                 </button>
                             </div>
-                            <div className="flex grid justify-between grid-cols-2 gap-4">
-                                {/* Driver Information */}
-                                <div style={{ width: '48%' }}>
-                                    <div className="modal-driver-info">
-                                        <div className="modal-driver-info-header">
-                                            <p className="text-ssm font-semibold mb-2">Driver Information</p>
-                                        </div>
-                                        <div className="flex justify-between p-3 border-bottom-line">
-                                            <p className="m-0">City</p>
-                                            <p className="m-0">FT Walton</p>
-                                        </div>
-                                        <div className="flex justify-between p-3 border-bottom-line">
-                                            <p className="m-0">Code</p>
-                                            <p className="m-0"> 0105</p>
-                                        </div>
-                                        <div className="flex justify-between p-3 border-bottom-line">
-                                            <p className="m-0">DOB</p>
-                                            <p className="m-0">01/15/1960</p>
-                                        </div>
-                                        <div className="flex justify-between p-3 border-bottom-line">
-                                            <p className="m-0">Hire Date</p>
-                                            <p className="m-0">11/7/2012</p>
-                                        </div>
-                                        <div className="flex justify-between p-3">
-                                            <p className="m-0">TSA Cert</p>
-                                            <p className="m-0">Yes</p>
-                                        </div>
+                            <div className="grid justify-between grid-cols-2 gap-4">
+                                <h1>Manage Flight Assignment</h1>
+                                <p>Update flight details, adjust schedules, add notes, or make edits as needed.</p>
+                                <div onClick={handleFlightStatus} className="bg-gray-200 cursor-pointer flex justify-between p-4 rounded-lg items-center mt-4 mb-4">
+                                    <div>
+                                        <span>Flight Status</span>
                                     </div>
-                                    <div className="mt-4 modal-driver-info">
-                                        <div className="modal-driver-info-header">
-                                            <h3 className="text-ssm font-semibold mb-2">Safety Check</h3>
-                                        </div>
-                                        {safetyArr.map((item) => (
-                                            <div key={item.key} className="flex justify-between items-center p-3 border-bottom-line">
-                                                <p className="m-0">{item.label}</p>
-                                                <label className={`custom-checkbox ${safetyCheck[item.key] ? 'checked' : ''}`}>
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={safetyCheck[item.key]}
-                                                        onChange={() => toggleSafetyCheck(item.key)}
-                                                    />
-                                                    <span className="checkmark">{safetyCheck[item.key] ? "✔" : "✖"}</span>
-                                                </label>
-                                            </div>
-                                        ))}
+                                    <div>
+                                        <FaArrowRight />
+                                    </div>
+
+                                </div>
+                                <div onClick={handleScheduleChange} className="bg-gray-200 cursor-pointer flex justify-between p-4 rounded-lg items-center mt-4 mb-4">
+                                    <div>
+                                        <span>Schedule Change</span>
+                                    </div>
+                                    <div>
+                                        <FaArrowRight />
                                     </div>
                                 </div>
 
-                                {/* Vehicle Information */}
-                                <div style={{ width: '48%' }}>
-                                    <div className="modal-driver-info">
-                                        <div className="modal-driver-info-header">
-                                            <p className="text-ssm font-semibold mb-2">Vehicle Information</p>
-                                        </div>
-                                        <div className="flex justify-center p-4">
-                                            <img src={Vehicle} alt="vehicle" style={{ width: '350px' }} />
-                                        </div>
-                                        <div className="flex justify-center p-4">
-                                            <img src={DriverLicense} alt="Driver License" />
-                                        </div>
-                                        <div className="flex justify-between p-3 border-bottom-line">
-                                            <p>Make</p>
-                                            <p>KIA</p>
-                                        </div>
-                                        <div className="flex justify-between p-3 border-bottom-line">
-                                            <p>MOdel</p>
-                                            <p>SEDONA</p>
-                                        </div>
-                                        <div className="flex justify-between p-3 border-bottom-line">
-                                            <p>VIN</p>
-                                            <p>KNDUP13185661</p>
-                                        </div>
-                                        <div className="flex justify-between p-3 border-bottom-line">
-                                            <p>Odometer</p>
-                                            <p>116, 158</p>
-                                        </div>
-                                        <div className="flex justify-between p-3">
-                                            <p>Ignition</p>
-                                            <p>Off</p>
-                                        </div>
+                                <div onClick={handleAddNote} className="bg-gray-200 flex justify-between p-4 rounded-lg items-center mt-4 mb-4">
+                                    <div>
+                                        <span>Add Note</span>
                                     </div>
+                                    <div>
+                                        <FaArrowRight />
+                                    </div>
+
+                                </div>
+                                <div onClick={handleAdminLogin} className="bg-gray-200 flex justify-between p-4 rounded-lg items-center mt-4 mb-4">
+
+                                    <div>
+                                        <span>Edit(Admin Login)</span>
+                                    </div>
+                                    <div>
+                                        <FaArrowRight />
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

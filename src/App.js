@@ -15,6 +15,10 @@ import DriverCredentials from "./components/DriverDetails/DriverCredentials";
 import VehicleAssignment from "./components/DriverDetails/VehicleAssignment";
 import AirlineAdd from "./components/DriverDetails/AirlineAdd";
 import ImportData from "./components/DriverDetails/ImportData";
+import Reports from "./components/Reports";
+import FlightStatus from "./components/DriverDetails/FlightStatus";
+import AddNote from "./components/DriverDetails/AddNote";
+import ScheduleChange from "./components/DriverDetails/ScheduleChange";
 
 function App() {
   const [isUserAuthenticated, setUserAuthorization] = useState(false);
@@ -66,6 +70,10 @@ function App() {
             <Route path="/vehicle-assignment" element={<VehicleAssignment />} />
             <Route path="/airline-add" element={<AirlineAdd />} />
             <Route path="/import-data" element={<ImportData />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/flight-status" element={<FlightStatus />} />
+            <Route path="/add-note" element={<AddNote />} />
+            <Route path="/schedule-change" element={<ScheduleChange />} />
             {/* <Route path="/dashboard" element={<AdminCustomerContainer />} /> */}
           </>
         ) : (
