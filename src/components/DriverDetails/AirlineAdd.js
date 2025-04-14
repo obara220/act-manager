@@ -31,18 +31,18 @@ const AirlineAdd = () => {
         navigate("/import-data");
     }
     const handleBack = () => {
-        navigate("/vehicle-assignment");
+        navigate("/manager");
     }
     return (
         <div className="p-6 w-full">
             <HeaderContainer />
-            <div onClick={handleBack} className="flex justify-between items-center w-20 back-button">
-                <FaArrowLeft />
-                <span>Back</span>
-            </div>
             {/* Top Section */}
             <div className="items-center mt-5 personal-info-content">
-                <p className="font-semibold text-lg">Airline Add</p>
+                <div onClick={handleBack} className="flex justify-between cursor-pointer items-center w-20 back-button">
+                    <FaArrowLeft />
+                    <span>Back</span>
+                </div>
+                <p className="pt-4 font-semibold text-lg">Airline Add</p>
                 <span>Add a driver, assign company flights, and update details here</span>
                 <div className="w-100 mt-4 rounded-lg">
                     <div className="flex justify-between mb-2">
@@ -88,7 +88,7 @@ const AirlineAdd = () => {
                             </select>
                         </div>
                     </div>
-                    
+
                     <div className="flex justify-between mb-2">
                         <div>
                             <p>D/O</p>
@@ -107,7 +107,7 @@ const AirlineAdd = () => {
                             <input type="date" className="custom-input rounded-lg w-100 " />
                         </div>
                     </div>
-                    
+
                     <div className="flex justify-between mb-2">
                         <div>
                             <p>Time</p>
@@ -127,7 +127,7 @@ const AirlineAdd = () => {
                             </select>
                         </div>
                     </div>
-                    
+
                     <div className="flex justify-between mb-2">
                         <div>
                             <p>Rate</p>
@@ -138,7 +138,7 @@ const AirlineAdd = () => {
                             </select>
                         </div>
                     </div>
-                    
+
                     <div className="flex justify-between mb-2">
                         <div>
                             <p>Driver</p>
@@ -149,7 +149,7 @@ const AirlineAdd = () => {
                             </select>
                         </div>
                     </div>
-                    
+
                     <div className="flex justify-between mb-2">
                         <div>
                             <p>Vehicle</p>
@@ -176,7 +176,7 @@ const AirlineAdd = () => {
                             <input type="number" className="custom-input rounded-lg w-100" />
                         </div>
                     </div>
-                    
+
                     <div className="flex justify-between mb-2">
                         <div>
                             <p>Passengers</p>
@@ -196,7 +196,7 @@ const AirlineAdd = () => {
                     </div>
 
                     <div className="flex justify-between mt-4 save-button">
-                        <div onClick={handleSave} className="justify-between p-2 pr-20 pl-20 rounded-lg mr-1 flex items-center custom-blue-button">
+                        <div onClick={handleSave} className="justify-center p-2 pr-20 pl-20 rounded-lg mr-1 flex items-center custom-blue-button">
                             <span>Save</span>
                         </div>
                         <div>

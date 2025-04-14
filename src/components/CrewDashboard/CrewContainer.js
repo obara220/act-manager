@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaInfoCircle, FaComments, FaArrowRight, FaTimes } from "react-icons/fa";
+import { FaInfoCircle, FaComments, FaEdit, FaArrowRight, FaTimes, FaWrench, FaPlusCircle, FaCarSide, FaTrash, FaFileImport, FaChartBar, FaUserShield, FaUndo, FaRedo, FaFileAlt } from "react-icons/fa";
 import HeaderContainer from "./HeaderContainer";
 import Driver from "../../images/Male.png"
 import Map from "../../images/map.png"
@@ -34,6 +34,7 @@ const CrewContainer = () => {
     const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAssignRideModalOpen, setIsAssignRideModalOpen] = useState(false);
     const [safetyCheck, setSafetyCheck] = useState({
         clean: true,
         fluids: true,
@@ -107,7 +108,6 @@ const CrewContainer = () => {
         // { id: 4, name: "Delay", age: "On Time" },
     ];
 
-
     const toggleCheckbox = (id) => {
         setSelectedRows((prev) =>
             prev.includes(id) ? prev.filter((rowId) => rowId !== id) : [...prev, id]
@@ -133,6 +133,15 @@ const CrewContainer = () => {
     const handleAdminLogin = () => {
         navigate("/login");
     }
+    const handleAddAirline = () => {
+        navigate("/airline-add")
+    }
+    const handleAssignRide = () => {
+        setIsAssignRideModalOpen(!isAssignRideModalOpen)
+    }
+    const handleImport = () => {
+        navigate("/import-data")
+    }
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="p-6 w-full pr-6 pl-6">
@@ -140,10 +149,10 @@ const CrewContainer = () => {
                 <HeaderContainer />
 
                 {/* Flight Details */}
-                <div onClick={onDriverDetail} className="flex justify-between grid grid-cols-3 gap-4 text-center border-b pb-4 flight-details-container">
+                <div className="flex justify-between grid grid-cols-3 gap-4 text-center border-b pb-4 flight-details-container">
                     <div className="col-span-3 col-span-3-layout mb-4">
                         <p className="text-xl font-semibold">Quick Overview</p>
-                        <div className="justify-between p-4 rounded-lg flex items-center more-detail-button">
+                        <div onClick={onDriverDetail} className="justify-between p-4 rounded-lg flex items-center more-detail-button">
                             <div>
                                 <span>Your Drivers Details</span>
                             </div>
@@ -342,43 +351,53 @@ const CrewContainer = () => {
 
                 <div className="manger-button-groups-container p-2 rounded-lg mb-4 justify-between">
                     <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Repair</p>
+                        <FaWrench />
+                        <p className="mb-0 pl-10">Repair</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Add</p>
+                    <div onClick={handleAddAirline} className="flex align-center cursor-pointer pl-10">
+                        <FaPlusCircle />
+                        <p className="mb-0 pl-10">Add</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Assign Ride</p>
+                    <div onClick={handleAssignRide} className="flex align-center cursor-pointer pl-10">
+                        <FaCarSide />
+                        <p className="mb-0 pl-10">Assign Ride</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Delete</p>
+                    <div className="flex align-center cursor-pointer pl-10">
+                        <FaTrash />
+                        <p className="mb-0 pl-10">Delete</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Import</p>
+                    <div onClick={handleImport} className="flex align-center cursor-pointer pl-10">
+                        <FaFileImport />
+                        <p className="mb-0 pl-10">Import</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Charts</p>
+                    <div className="flex align-center cursor-pointer pl-10">
+                        <FaChartBar />
+                        <p className="mb-0 pl-10">Charts</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Admin</p>
+                    <div className="flex align-center cursor-pointer pl-10">
+                        <FaUserShield />
+                        <p className="mb-0 pl-10">Admin</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Undo</p>
+                    <div className="flex align-center cursor-pointer pl-10">
+                        <FaUndo />
+                        <p className="mb-0 pl-10">Undo</p>
                     </div>
 
-                    <div onClick={handleReport} className="flex align-center cursor-pointer">
-                        <p className="mb-0">Report</p>
+                    <div onClick={handleReport} className="flex align-center cursor-pointer pl-10">
+                        <FaFileAlt />
+                        <p className="mb-0 pl-10">Report</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer">
-                        <p className="mb-0">Refresh</p>
+                    <div className="flex align-center cursor-pointer pl-10">
+                        <FaRedo />
+                        <p className="mb-0 pl-10">Refresh</p>
                     </div>
                 </div>
 
@@ -398,21 +417,21 @@ const CrewContainer = () => {
                                         checked={selectedRows.length === data.length}
                                     />
                                 </th>
-                                <th className="p-10">ID</th>
-                                <th className="p-10">Schedule Date</th>
-                                <th className="p-10">Airline</th>
-                                <th className="p-10">Flight No</th>
-                                <th className="p-10">Status</th>
-                                <th className="p-10">Transport</th>
-                                <th className="p-10">Driver</th>
-                                <th className="p-10">Vehicle</th>
-                                <th className="p-10">Pilots</th>
-                                <th className="p-10">F/A</th>
-                                <th className="p-10">Pass</th>
-                                <th className="p-10">P/U</th>
-                                <th className="p-10">D/O</th>
-                                <th className="p-10">Edit</th>
-                                <th className="p-10">Delay</th>
+                                <th className="p-10 text-center">ID</th>
+                                <th className="p-10 text-center">Schedule Date</th>
+                                <th className="p-10 text-center">Airline</th>
+                                <th className="p-10 text-center">Flight No</th>
+                                <th className="p-10 text-center">Status</th>
+                                <th className="p-10 text-center">Transport</th>
+                                <th className="p-10 text-center">Driver</th>
+                                <th className="p-10 text-center">Vehicle</th>
+                                <th className="p-10 text-center">Pilots</th>
+                                <th className="p-10 text-center">F/A</th>
+                                <th className="p-10 text-center">Pass</th>
+                                <th className="p-10 text-center">P/U</th>
+                                <th className="p-10 text-center">D/O</th>
+                                <th className="p-10 text-center">Edit</th>
+                                <th className="p-10 text-center">Delay</th>
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
@@ -437,7 +456,7 @@ const CrewContainer = () => {
                                     <td className="p-10">{row.pass_value}</td>
                                     <td className="p-10">{row.pu_value}</td>
                                     <td className="p-10">{row.do_value}</td>
-                                    <td onClick={toggleModal} className="cursor-pointer p-10">edit</td>
+                                    <td onClick={toggleModal} className="cursor-pointer flex justify-center"><FaEdit /></td>
                                     <td className="p-10">{row.delay_value}</td>
 
                                     {/* <td>{row.d}</td> */}
@@ -517,16 +536,17 @@ const CrewContainer = () => {
                 {/* Modal */}
                 {isModalOpen && (
                     <div className="modal-overlay">
-                        <div className="modal-container w-50">
-                            <div className="modal-header">
+                        <div className="modal-container h-auto w-50">
+                            <div className="modal-header mb-0">
                                 {/* <h2 className="text-xl font-semibold">Driver & Vehicle Information</h2> */}
                                 <button className="modal-close" onClick={toggleModal}>
                                     <FaTimes size={20} />
                                 </button>
                             </div>
                             <div className="grid justify-between grid-cols-2 gap-4">
-                                <h1>Manage Flight Assignment</h1>
-                                <p>Update flight details, adjust schedules, add notes, or make edits as needed.</p>
+                                {/* <h1>Manage Flight Assignment</h1> */}
+                                <p className="text-lg font-semibold">Manage Flight Assignment</p>
+                                <p className="text-gray-500">Update flight details, adjust schedules, add notes, or make edits as needed.</p>
                                 <div onClick={handleFlightStatus} className="bg-gray-200 cursor-pointer flex justify-between p-4 rounded-lg items-center mt-4 mb-4">
                                     <div>
                                         <span>Flight Status</span>
@@ -563,6 +583,50 @@ const CrewContainer = () => {
                                         <FaArrowRight />
                                     </div>
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {isAssignRideModalOpen && (
+                    <div className="modal-overlay">
+                        <div className="modal-container h-auto w-50">
+                            <div className="modal-header mb-0">
+                                {/* <h2 className="text-xl font-semibold">Driver & Vehicle Information</h2> */}
+                                <button className="modal-close" onClick={handleAssignRide}>
+                                    <FaTimes size={20} />
+                                </button>
+                            </div>
+                            <div className="grid justify-between grid-cols-2 gap-4">
+                                <p className="text-lg font-semibold">Assign a Ride</p>
+                                <div className="cursor-pointer flex justify-between pt-4 ">
+                                    <div>
+                                        <span>Driver</span>
+                                    </div>
+                                    <div>
+                                        <select className="custom-input rounded-lg">
+                                            <option>0001-Taxi Run</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="cursor-pointer flex justify-between pt-4">
+                                    <div>
+                                        <span>Car</span>
+                                    </div>
+                                    <div>
+                                        <select className="custom-input rounded-lg">
+                                            <option>1102-KIA SEDONA P..</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="flex justify-between mt-4 save-button">
+                                    <div className="justify-center p-2 pr-20 pl-20 rounded-lg mr-1 flex items-center custom-blue-button">
+                                        <span>Assign</span>
+                                    </div>
+                                    <div className="justify-between pl-20 pr-20 p-2 rounded-lg flex items-center custom-white-button">
+                                        <span>Cancel</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -36,13 +36,13 @@ const VehicleAssignment = () => {
     return (
         <div className="p-6 w-full">
             <HeaderContainer />
-            <div onClick={handleBack} className="flex justify-between items-center w-20 back-button">
-                <FaArrowLeft />
-                <span>Back</span>
-            </div>
             {/* Top Section */}
             <div className="items-center mt-5 personal-info-content">
-                <p className="font-semibold text-lg">Vehicle Assignment</p>
+                <div onClick={handleBack} className="flex cursor-pointer justify-between items-center w-20 back-button">
+                    <FaArrowLeft />
+                    <span>Back</span>
+                </div>
+                <p className="pt-4 font-semibold text-lg">Vehicle Assignment</p>
                 <span>Update driver's Vehicle Information properly.</span>
                 <div className="w-100 mt-4 rounded-lg">
                     <div className="flex justify-between mb-2">

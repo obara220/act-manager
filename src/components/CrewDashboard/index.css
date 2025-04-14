@@ -175,6 +175,9 @@
     gap: 1rem;
 }
 
+.h-auto {
+    height: auto;
+}
 .text-center {
     text-align: center;
 }
@@ -226,6 +229,9 @@
 .p-4 {
     padding: 1rem;
 }
+.pl-10 {
+    padding-left: 10px;
+}
 
 .pl-6 {
     padding-left: 6rem;
@@ -265,6 +271,9 @@
     /* 80px */
 }
 
+.mb-0 {
+    margin-bottom: 0px !important;
+}
 .mb-2 {
     margin-bottom: 0.5rem;
 }
@@ -539,7 +548,7 @@
 .manger-button-groups-container {
     align-items: center;
     display: flex;
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
     border: solid 1px #383E5026;
     margin-right: 0px;

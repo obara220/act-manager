@@ -36,13 +36,17 @@ const ImportData = () => {
     return (
         <div className="p-6 w-full">
             <HeaderContainer />
-            <div onClick={handleBack} className="flex justify-between items-center w-20 back-button">
+            {/* <div onClick={handleBack} className="flex justify-between items-center w-20 back-button">
                 <FaArrowLeft />
                 <span>Back</span>
-            </div>
+            </div> */}
             {/* Top Section */}
             <div className="items-center mt-5 personal-info-content">
-                <p className="font-semibold text-lg">Import Data</p>
+                <div onClick={handleBack} className="flex justify-between cursor-pointer items-center w-20 back-button">
+                    <FaArrowLeft />
+                    <span>Back</span>
+                </div>
+                <p className="pt-4 font-semibold text-lg">Import Data</p>
                 <span>Easily upload driver, vehicle, and flight data in bulk. Ensure accuracy by using the provided template format.</span>
                 <div className="w-100 mt-4 rounded-lg">
                     <div className="flex justify-between mb-2">

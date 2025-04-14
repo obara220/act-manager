@@ -32,18 +32,18 @@ const DriverDetail = () => {
     }
 
     const handleBack = () => {
-        navigate("/driver-details");
+        navigate("/manager");
     }
     return (
         <div className="p-6 w-full">
             <HeaderContainer />
-            <div onClick={handleBack} className="flex justify-between items-center w-20 back-button">
-                <FaArrowLeft />
-                <span>Back</span>
-            </div>
             {/* Top Section */}
             <div className="items-center mt-5 personal-info-content">
-                <p className="font-semibold text-lg">Personal Information</p>
+                <div onClick={handleBack} className="flex cursor-pointer justify-between items-center w-20 back-button">
+                    <FaArrowLeft />
+                    <span>Back</span>
+                </div>
+                <p className="pt-4 font-semibold text-lg">Personal Information</p>
                 <span>Update driver's photo and personal details here</span>
                 <div className="w-100 mt-4 rounded-lg">
                     <div className="flex justify-between mb-2">
@@ -70,7 +70,7 @@ const DriverDetail = () => {
                             <p>Profile Photo</p>
                         </div>
                         <div className="flex justify-between w-35">
-                            
+
                             <select className="custom-input rounded-lg">
                                 <option>Air Crew Transport</option>
                             </select>
