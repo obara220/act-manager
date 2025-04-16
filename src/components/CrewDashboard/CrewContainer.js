@@ -142,6 +142,9 @@ const CrewContainer = () => {
     const handleImport = () => {
         navigate("/import-data")
     }
+    const handleCharts = () => {
+        navigate("/charts")
+    }
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="p-6 w-full pr-6 pl-6">
@@ -375,7 +378,7 @@ const CrewContainer = () => {
                         <p className="mb-0 pl-10">Import</p>
                     </div>
 
-                    <div className="flex align-center cursor-pointer pl-10">
+                    <div onClick={handleCharts} className="flex align-center cursor-pointer pl-10">
                         <FaChartBar />
                         <p className="mb-0 pl-10">Charts</p>
                     </div>

@@ -19,6 +19,7 @@ import Reports from "./components/Reports";
 import FlightStatus from "./components/DriverDetails/FlightStatus";
 import AddNote from "./components/DriverDetails/AddNote";
 import ScheduleChange from "./components/DriverDetails/ScheduleChange";
+import Chart from "./components/Charts/Chart";
 
 function App() {
   const [isUserAuthenticated, setUserAuthorization] = useState(false);
@@ -74,6 +75,7 @@ function App() {
             <Route path="/flight-status" element={<FlightStatus />} />
             <Route path="/add-note" element={<AddNote />} />
             <Route path="/schedule-change" element={<ScheduleChange />} />
+            <Route path="/charts" element={<Chart />} />
             {/* <Route path="/dashboard" element={<AdminCustomerContainer />} /> */}
           </>
         ) : (
