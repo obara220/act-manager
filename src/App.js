@@ -20,6 +20,13 @@ import FlightStatus from "./components/DriverDetails/FlightStatus";
 import AddNote from "./components/DriverDetails/AddNote";
 import ScheduleChange from "./components/DriverDetails/ScheduleChange";
 import Chart from "./components/Charts/Chart";
+import SuperAdminContainer from "./components/CrewDashboard/SuperAdminContainer";
+import ManagerDetail from "./components/ManagerDetails/ManagerDetail";
+import ManagerNew from "./components/ManagerDetails/ManagerNew";
+import ManagerEdit from "./components/ManagerDetails/ManagerEdit";
+import WorkRoleDetails from "./components/ManagerDetails/WorkRoleDetails";
+import ManagerLoginCredentials from "./components/ManagerDetails/ManagerLoginCredentials";
+import SuperAdminDetails from "./components/SuperAdmin/SuperAdminDetails";
 
 function App() {
   const [isUserAuthenticated, setUserAuthorization] = useState(false);
@@ -41,7 +48,7 @@ function App() {
     const authStatus = sessionStorage.getItem("isUserAuthenticated") === "true";
     setUserAuthorization(authStatus);
   }, []);
-  
+
 
   const handleLogout = () => {
     sessionStorage.removeItem("isUserAuthenticated");
@@ -65,6 +72,7 @@ function App() {
         {isUserAuthenticatedRedux ? (
           <>
             <Route path="/manager" element={<CrewContainer />} />
+            <Route path="/super-admin" element={<SuperAdminContainer />} />
             <Route path="/driver-detail" element={<DriverDetail />} />
             <Route path="/driver-new" element={<DriverNew />} />
             <Route path="/driver-credentials" element={<DriverCredentials />} />
@@ -77,6 +85,14 @@ function App() {
             <Route path="/schedule-change" element={<ScheduleChange />} />
             <Route path="/charts" element={<Chart />} />
             {/* <Route path="/dashboard" element={<AdminCustomerContainer />} /> */}
+            {/* Manager Details */}
+            <Route path="/manager-detail" element={<ManagerDetail />} />
+            <Route path="/manager-new" element={<ManagerNew />} />
+            <Route path="/manager-edit" element={<ManagerEdit />} />
+            <Route path="/manager-work-role-details" element={<WorkRoleDetails />} />
+            <Route path="/manager-login-credentials" element={<ManagerLoginCredentials />} />
+            {/* Super Admin */}
+            <Route path="/safe-super-admin" element={<SuperAdminDetails />} />
           </>
         ) : (
           <Route path="*" element={<LoginRegisterForm />} />

@@ -47,12 +47,18 @@ function Login(props) {
   );
   // Adding click handler
   function handleClick() {
-    if (uname === "crew@gmail.com" && password === "123") {
+    if (uname === "manager@gmail.com" && password === "123") {
       sessionStorage.setItem("isUserAuthenticated", true);
       setError("");
       setNextStep(true);
 
-    } else {
+    } else if (uname === "admin@gmail.com" && password === "123") {
+      sessionStorage.setItem("isUserAuthenticated", true);
+      navigate("/super-admin");
+      setError("");
+      dispatch(setUserAuth(true));
+    }
+    else {
       setError("You don't have access!")
     }
 
@@ -122,10 +128,10 @@ function Login(props) {
   }
   const handleFind = () => {
     // if (flightNumber === "123") {
-      // window.location.reload(); // Refresh the page
-      setError("");
-      navigate("/manager"); // Use navigate to redirect to the login page
-      dispatch(setUserAuth(true));
+    // window.location.reload(); // Refresh the page
+    setError("");
+    navigate("/manager"); // Use navigate to redirect to the login page
+    dispatch(setUserAuth(true));
 
     // } else {
     //   setError("Invalid flight number!"); // Show error message
@@ -140,7 +146,7 @@ function Login(props) {
   return (
     <>
       <div className="login-container" style={{ paddingBottom: error ? '0px' : '22px' }}>
-        <h1>MANAGER LOG IN</h1>
+        <h1>LOG IN</h1>
         {!nextStep &&
           <p>Welcome back!</p>
         }
