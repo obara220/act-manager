@@ -118,7 +118,8 @@ const Reports = () => {
         navigate("/driver-detail");
     }
     const handleBack = () => {
-        navigate("/manager");
+        sessionStorage.getItem("UserRole") === "Admin" ? navigate("/super-admin") : navigate("/manager");
+        // navigate("/manager");
     }
     return (
         <div className="">

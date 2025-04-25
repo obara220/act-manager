@@ -34,6 +34,8 @@ function App() {
   const [isAdmin, setAdmin] = useState(
     sessionStorage.getItem("isAdmin") === "true" || false
   );
+  const sessionAuth = sessionStorage.getItem("isUserAuthenticated") === "true";
+  const isAuthenticated = isUserAuthenticatedRedux || sessionAuth;
   const [customerId, setCustomerId] = useState(
     sessionStorage.getItem("customerId") || undefined
   );
@@ -69,7 +71,7 @@ function App() {
         <Route path="/login" element={<LoginRegisterForm setUserAuthenticatedStatus={setUserAuthenticatedStatus} />} />
 
         {/* Protect routes that require authentication */}
-        {isUserAuthenticatedRedux ? (
+        {isAuthenticated ? (
           <>
             <Route path="/manager" element={<CrewContainer />} />
             <Route path="/super-admin" element={<SuperAdminContainer />} />

@@ -54,6 +54,7 @@ function Login(props) {
 
     } else if (uname === "admin@gmail.com" && password === "123") {
       sessionStorage.setItem("isUserAuthenticated", true);
+      sessionStorage.setItem("UserRole", 'Admin');
       navigate("/super-admin");
       setError("");
       dispatch(setUserAuth(true));

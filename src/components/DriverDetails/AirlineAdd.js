@@ -31,7 +31,7 @@ const AirlineAdd = () => {
         navigate("/import-data");
     }
     const handleBack = () => {
-        navigate("/manager");
+        sessionStorage.getItem("UserRole") === "Admin" ? navigate("/super-admin") : navigate("/manager");
     }
     return (
         <div className="p-6 w-full">
