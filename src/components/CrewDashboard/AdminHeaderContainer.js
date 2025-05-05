@@ -43,7 +43,7 @@ function AdminHeaderContainer() {
                     </div>
                 </div>
                 <div className="flex items-center">
-                    <FaSignOutAlt className="logout-icon" onClick={handleLogout} />
+                    <FaSignOutAlt className="logout-icon" style={{right: '100px'}} onClick={handleLogout} />
                 </div>
             </div>
         </div>

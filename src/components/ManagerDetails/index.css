@@ -69,23 +69,6 @@
     font-size: 1rem;
 }
 
-.logout-icon {
-    position: absolute;
-    right: 30px;
-    /* Position the logout icon after the search icon */
-    color: #aaa;
-    font-size: 1.2rem;
-    /* Slightly bigger for emphasis */
-    cursor: pointer;
-    /* Change the cursor to indicate it's clickable */
-    transition: color 0.3s ease;
-    /* Add smooth transition for hover effect */
-}
-
-.logout-icon:hover {
-    color: #f44336;
-    /* Change color on hover (red for logout) */
-}
 
 /* Add this style to set the image height */
 .header-left img {

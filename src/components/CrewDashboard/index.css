@@ -71,7 +71,7 @@
 
 .logout-icon {
     position: absolute;
-    right: 100px;
+    right: 30px;
     /* Position the logout icon after the search icon */
     color: #aaa;
     font-size: 1.2rem;
