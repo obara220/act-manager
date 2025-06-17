@@ -119,6 +119,9 @@
 .justify-between {
     justify-content: space-between;
 }
+.justify-content-end {
+    justify-content: flex-end;;
+}
 
 .bg-white {
     background-color: white;

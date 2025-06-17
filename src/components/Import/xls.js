@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import * as XLSX from "xlsx";
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
 
 import { supabase } from "../../supabaseClient";
 import { FaArrowLeft } from "react-icons/fa";
@@ -15,23 +14,19 @@ const ImportXls = () => {
   const navigate = useNavigate();
   const [fileName, setFileName] = useState();
   const [jsonList, setJsonList] = useState([]);
-  const [isAdmin, setAdmin] = useState(
-    sessionStorage.getItem("isAdmin") === "true" || false
-  );
-
-  const [isProcessingCSV, setProcessingCSV] = useState(false);
-  const [isImporting, setIsImporting] = useState(false);
   const [errorList, setErrorList] = useState([]);
 
+  const handleSave = useCallback(() => {
+    navigate("/import-xls");
+  }, []);
   const handleBack = useCallback(() => {
     sessionStorage.getItem("UserRole") === "1"
       ? navigate("/super-admin")
       : navigate("/manager");
     // navigate("/manager");
-  }, [navigate]);
+  }, []);
 
   const onDrop = useCallback((acceptedFiles) => {
-    setProcessingCSV(true);
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
@@ -78,27 +73,14 @@ const ImportXls = () => {
       } catch (_err) {
         console.error("Error reading xls file", _err);
       }
-      setProcessingCSV(false);
     };
-    reader.onerror = () => {
-      setProcessingCSV(false);
-    };
+    reader.onerror = () => {};
 
     reader.readAsArrayBuffer(acceptedFiles[0]);
   }, []);
 
-  const onImportSuccess = useCallback(() => {
-    if (isAdmin) navigate("/super-admin#schedule-table");
-    else navigate("/manager#schedule-table");
-  }, [isAdmin, navigate]);
   const onImport = useCallback(async () => {
-    setIsImporting(true);
     const messages = [];
-
-    /**
-     * * Check if there are duplicated inputs
-     */
-
     for (let i = 0; i < jsonList.length; i++) {
       try {
         const _item = jsonList[i];
@@ -125,7 +107,7 @@ const ImportXls = () => {
           transformed.pickupLocation = pickupHotel;
           transformed.flightNo = dropoffFlightNo;
           transformed.scheduleDate = dropoffTime || _item.scheduleDate;
-          transformed.pass = _item.passenger;
+          transformed.pass = _item.passengers;
           transformed.client = dropoffAirline;
           transformed.type = "DEPART";
         } else if (pickupSplit.length > 1 && dropoffSplit.length === 1) {
@@ -139,7 +121,7 @@ const ImportXls = () => {
           transformed.pickupLocation = _item.airport;
           transformed.flightNo = flightNo;
           transformed.scheduleDate = time;
-          transformed.pass = _item.passenger;
+          transformed.pass = _item.passengers;
           transformed.client = airline;
           transformed.type = "ARRIVE";
         } else {
@@ -166,9 +148,9 @@ const ImportXls = () => {
             .from("Schedule")
             .insert([
               {
-                CompanyID: companyId,
-                ScheduleStatusID: scheduleStatusId,
-                ScheduleTypeID: 1,
+                CompanyId: companyId,
+                ScheduleStatusId: scheduleStatusId,
+                ScheduleTypeId: 1,
                 TransportationTypeID: transportationType,
                 AirlineID: airlineId,
                 DriverID: driverId,
@@ -188,7 +170,7 @@ const ImportXls = () => {
             console.log("Error while inserting to db", scheduleError);
             messages.push(transformed.toString());
           }
-          const scheduleId = scheduleData[0].ScheduleID;
+          const scheduleId = scheduleData[0].id;
 
           const locationId = await getLocationId(transformed.pickupLocation);
           if (locationId) {
@@ -211,7 +193,7 @@ const ImportXls = () => {
             transformed.dropoffLocation
           );
           if (dropLocationId) {
-            const { error } = await supabase.from("ScheduleDropoffs").insert([
+            const { error } = await supabase.from("ScheduleDropOffs").insert([
               {
                 ScheduleID: scheduleId,
                 LocationID: locationId,
@@ -228,14 +210,9 @@ const ImportXls = () => {
       } catch (_err) {
         console.log("Error while inserting to db", _err);
         messages.push(_err.toString());
-        toast.error("Error while importing schedules.");
-        return;
       }
-      setIsImporting(false);
     }
-    toast.success("Imported schedules successfully!");
-    onImportSuccess();
-  }, [jsonList, onImportSuccess]);
+  }, [jsonList]);
 
   return (
     <div className="p-6 w-full">
@@ -267,10 +244,7 @@ const ImportXls = () => {
               <Dropzone onDrop={onDrop}>
                 {({ getRootProps, getInputProps }) => (
                   <section className="dropzone">
-                    <div
-                      {...getRootProps()}
-                      className="w-full h-full flex-center"
-                    >
+                    <div {...getRootProps()} className="flex-center">
                       <input
                         {...getInputProps()}
                         accept={[
@@ -309,31 +283,17 @@ const ImportXls = () => {
           </div>
         </div>
         <div className="mt-4 import-buttons">
-          <button
+          <div
             onClick={onImport}
-            disabled={isImporting || isProcessingCSV || jsonList.length == 0}
-            className={`justify-between p-2 pr-20 pl-20 rounded-lg mr-1 flex items-center custom-blue-button border-none ${
-              isImporting || isProcessingCSV || jsonList.length == 0
-                ? "opacity-60"
-                : ""
-            } hover:opacity-60`}
+            className="justify-between p-2 pr-20 pl-20 rounded-lg mr-1 flex items-center custom-blue-button"
           >
-            {isImporting ? (
-              <span className="loader"></span>
-            ) : (
-              <span>Import</span>
-            )}
-          </button>
+            <span>Import</span>
+          </div>
           <div>
             {/* <select className="custom-input rounded-lg"> 
                                     <option>BUR</option>
                                 </select> */}
-            <div
-              onClick={() => {
-                navigate("/super-admin#schedule-table");
-              }}
-              className="justify-between pl-20 pr-20 p-2 rounded-lg flex items-center custom-white-button"
-            >
+            <div className="justify-between pl-20 pr-20 p-2 rounded-lg flex items-center custom-white-button">
               <span>Cancel</span>
             </div>
           </div>
@@ -436,76 +396,76 @@ function setDriverAndVehicle(airport, transformed) {
 async function getAirlineId(airlineCode) {
   const { data, error } = await supabase
     .from("Airlines")
-    .select("AirlineID")
+    .select("id")
     .eq("AirlineLetterCode", airlineCode)
     .single();
 
   if (error) throw error;
-  return data.AirlineID;
+  return data.id;
 }
 
 async function getCompanyId(companyName) {
   const { data, error } = await supabase
     .from("Companies")
-    .select("CompanyID")
+    .select("id")
     .eq("Name", companyName)
     .single();
 
   if (error) throw error;
-  return data.CompanyID;
+  return data.id;
 }
 
 async function getDriverId(driverCode) {
   const { data, error } = await supabase
     .from("Drivers")
-    .select("DriverID")
+    .select("id")
     .eq("DriverCode", driverCode)
     .single();
 
   if (error) throw error;
-  return data.DriverID;
+  return data.id;
 }
 
 async function getVehicleId(vehicleCode) {
   const { data, error } = await supabase
     .from("Vehicles")
-    .select("VehicleID")
+    .select("id")
     .ilike("Code", `${vehicleCode}%`)
     .single();
 
   if (error || !data) return 0;
-  return data.VehicleID;
+  return data.id;
 }
 
 async function getScheduleStatusId(status) {
   const { data, error } = await supabase
     .from("ScheduleStatuses")
-    .select("ScheduleStatusID")
+    .select("id")
     .eq("Code", status)
     .single();
 
   if (error) throw error;
-  return data.ScheduleStatusID;
+  return data.id;
 }
 
 async function getTransportationTypeId(transportationType) {
   const { data, error } = await supabase
     .from("ScheduleTransportationTypes")
-    .select("TransportationTypeID")
+    .select("id")
     .eq("Code", transportationType)
     .single();
 
   if (error) throw error;
-  return data.TransportationTypeID;
+  return data.id;
 }
 
 async function getLocationId(locationCode) {
   const { data, error } = await supabase
     .from("Locations")
-    .select("LocationID")
+    .select("id")
     .eq("Code", locationCode)
     .single();
 
   if (error || !data) return null;
-  return data.LocationID;
+  return data.id;
 }

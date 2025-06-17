@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux"; // Import useSelector
 
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'; // Import BrowserRouter
+import ReactDOM from "react-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom"; // Import BrowserRouter
 import LoginRegisterForm from "./components/LoginRegisterContainer/LoginRegisterContainer";
 import AdminCustomerContainer from "./components/AdminCustomerContainer/AdminCustomerContainer";
-import logo from "./Login.png"
+import logo from "./Login.png";
 // Initialization for ES Users
 import HeaderContainer from "./components/CrewDashboard/HeaderContainer";
 import CrewContainer from "./components/CrewDashboard/CrewContainer";
 import DriverDetail from "./components/DriverDetails/DriverDetail";
-import DriverNew from "./components/DriverDetails/DriverNew"
+import DriverNew from "./components/DriverDetails/DriverNew";
 import DriverCredentials from "./components/DriverDetails/DriverCredentials";
 import VehicleAssignment from "./components/DriverDetails/VehicleAssignment";
 import AirlineAdd from "./components/DriverDetails/AirlineAdd";
@@ -27,10 +27,17 @@ import ManagerEdit from "./components/ManagerDetails/ManagerEdit";
 import WorkRoleDetails from "./components/ManagerDetails/WorkRoleDetails";
 import ManagerLoginCredentials from "./components/ManagerDetails/ManagerLoginCredentials";
 import SuperAdminDetails from "./components/SuperAdmin/SuperAdminDetails";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [isUserAuthenticated, setUserAuthorization] = useState(false);
-  const isUserAuthenticatedRedux = useSelector((state) => state.auth.isAuthenticated); // Access Redux state
+  const isUserAuthenticatedRedux = useSelector(
+    (state) => state.auth.isAuthenticated
+  ); // Access Redux state
+  const user = useSelector((state) => state.auth.user);
+  const userRole = sessionStorage.getItem("UserRole");
+
   const [isAdmin, setAdmin] = useState(
     sessionStorage.getItem("isAdmin") === "true" || false
   );
@@ -51,7 +58,6 @@ function App() {
     setUserAuthorization(authStatus);
   }, []);
 
-
   const handleLogout = () => {
     sessionStorage.removeItem("isUserAuthenticated");
     sessionStorage.removeItem("isAdmin");
@@ -64,11 +70,19 @@ function App() {
     // Use navigate to redirect to the login page
   };
 
+  console.log(user, "-----user-----");
   return (
     <BrowserRouter>
       <Routes>
         {/* Conditionally render LoginRegisterForm if not authenticated */}
-        <Route path="/login" element={<LoginRegisterForm setUserAuthenticatedStatus={setUserAuthenticatedStatus} />} />
+        <Route
+          path="/login"
+          element={
+            <LoginRegisterForm
+              setUserAuthenticatedStatus={setUserAuthenticatedStatus}
+            />
+          }
+        />
 
         {/* Protect routes that require authentication */}
         {isAuthenticated ? (
@@ -81,6 +95,7 @@ function App() {
             <Route path="/vehicle-assignment" element={<VehicleAssignment />} />
             <Route path="/airline-add" element={<AirlineAdd />} />
             <Route path="/import-data" element={<ImportData />} />
+            <Route path="/import-xls" element={<ImportData />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/flight-status" element={<FlightStatus />} />
             <Route path="/add-note" element={<AddNote />} />
@@ -91,8 +106,14 @@ function App() {
             <Route path="/manager-detail" element={<ManagerDetail />} />
             <Route path="/manager-new" element={<ManagerNew />} />
             <Route path="/manager-edit" element={<ManagerEdit />} />
-            <Route path="/manager-work-role-details" element={<WorkRoleDetails />} />
-            <Route path="/manager-login-credentials" element={<ManagerLoginCredentials />} />
+            <Route
+              path="/manager-work-role-details"
+              element={<WorkRoleDetails />}
+            />
+            <Route
+              path="/manager-login-credentials"
+              element={<ManagerLoginCredentials />}
+            />
             {/* Super Admin */}
             <Route path="/safe-super-admin" element={<SuperAdminDetails />} />
           </>
@@ -100,6 +121,7 @@ function App() {
           <Route path="*" element={<LoginRegisterForm />} />
         )}
       </Routes>
+      <ToastContainer position="top-right" autoClose={3000} />
     </BrowserRouter>
   );
 }

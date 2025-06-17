@@ -7,7 +7,7 @@ import "./Login.scss";
 import { getBaseURL } from "../apiConfig";
 import TokenRefresher from "../Utils/token";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { supabase } from "../../supabaseClient";
 import {
   MDBBtn,
   MDBContainer,
@@ -21,11 +21,10 @@ import {
   MDBDropdownToggle,
   MDBDropdownMenu,
   MDBDropdownItem,
-  MDBIcon
-}
-  from 'mdb-react-ui-kit';
+  MDBIcon,
+} from "mdb-react-ui-kit";
 
-import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "mdb-react-ui-kit/dist/css/mdb.min.css";
 // import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function Login(props) {
@@ -33,7 +32,6 @@ function Login(props) {
   const [selectedLocation, setSelectedLocation] = useState("");
 
   const locations = ["New York", "Los Angeles", "Chicago", "Houston", "Miami"];
-
 
   let [uname, setUname] = useState("");
   let [password, setPass] = useState("");
@@ -45,54 +43,100 @@ function Login(props) {
   let [isUserAuthenticated, setUserAuthorization] = useState(
     sessionStorage.getItem("isUserAuthenticated") === "true" || false
   );
-  // Adding click handler
-  function handleClick() {
-    if (uname === "manager@gmail.com" && password === "123") {
-      sessionStorage.setItem("isUserAuthenticated", true);
-      setError("");
-      setNextStep(true);
+  async function handleClick() {
+    setError(""); // reset any previous error
 
-    } else if (uname === "admin@gmail.com" && password === "123") {
+    if (!validateInputs()) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("Users")
+        .select("*")
+        .eq("Email", uname)
+        .eq("Password", password);
+
+      if (error) {
+        console.error("Supabase error:", error.message);
+        setError("Server error occurred.");
+        return;
+      }
+
+      if (data.length === 0) {
+        setError("Invalid credentials.");
+        return;
+      }
+      console.log(data, "--data:");
+      const user = data[0];
+
+      // Store basic session info
       sessionStorage.setItem("isUserAuthenticated", true);
-      sessionStorage.setItem("UserRole", 'Admin');
-      navigate("/super-admin");
-      setError("");
+      sessionStorage.setItem("UserRole", user.RoleID || "User");
+      sessionStorage.setItem("UserId", user.UserID);
+      sessionStorage.setItem("User", user.Email);
+
       dispatch(setUserAuth(true));
+      dispatch({ type: "USER_ID", payload: user });
+      setNextStep(true); // Show location selection
+      // if (user.RoleID === 1) {
+      //   navigate("/super-admin");
+      // } else if (user.RoleID === 2) {
+      //   setNextStep(true); // Show location selection
+      //   // navigate("/manager"); // Default page
+      // } else {
+      //   navigate("/manager"); // Default page
+      // }
+    } catch (err) {
+      console.error("Unexpected error:", err.message);
+      setError("Unexpected error. Try again.");
     }
-    else {
-      setError("You don't have access!")
-    }
-
-    // if (validateInputs()) {
-    //   const user = {
-    //     email: uname,
-    //     password: password,
-    //   };
-    //   let url = `${getBaseURL()}api/users/login`;
-    //   axios
-    //     .post(url, { ...user })
-    //     .then((res) => {
-    //       console.log(res);
-    //       if (res.data.length > 0) {
-    //         console.log("Logged in successfully");
-    //         sessionStorage.setItem("isUserAuthenticated", true);
-    //         const user = res.data[0].isAdmin;
-    //         sessionStorage.setItem("customerId", res.data[0].userId);
-    //         sessionStorage.setItem("isAdmin", user ? true : false);
-    //         sessionStorage.setItem("jwt_token", res.data[0].token);
-    //         sessionStorage.setItem("jwt_refresh_token", res.data[0].refreshToken);
-    //         TokenRefresher(res.data[0].refreshToken);
-    //         props.setUserAuthenticatedStatus(user ? true : false, res.data[0].userId);
-    //       } else {
-    //         console.log("User not available");
-    //       }
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //       console.log("error");
-    //     });
-    // }
   }
+
+  // Adding click handler
+  // function handleClick() {
+  //   if (uname === "manager@gmail.com" && password === "123") {
+  //     sessionStorage.setItem("isUserAuthenticated", true);
+  //     setError("");
+  //     setNextStep(true);
+  //   } else if (uname === "admin@gmail.com" && password === "123") {
+  //     sessionStorage.setItem("isUserAuthenticated", true);
+  //     sessionStorage.setItem("UserRole", "Admin");
+  //     navigate("/super-admin");
+  //     setError("");
+  //     dispatch(setUserAuth(true));
+  //   } else {
+  //     setError("You don't have access!");
+  //   }
+
+  //   // if (validateInputs()) {
+  //   //   const user = {
+  //   //     email: uname,
+  //   //     password: password,
+  //   //   };
+  //   //   let url = `${getBaseURL()}api/users/login`;
+  //   //   axios
+  //   //     .post(url, { ...user })
+  //   //     .then((res) => {
+  //   //       console.log(res);
+  //   //       if (res.data.length > 0) {
+  //   //         console.log("Logged in successfully");
+  //   //         sessionStorage.setItem("isUserAuthenticated", true);
+  //   //         const user = res.data[0].isAdmin;
+  //   //         sessionStorage.setItem("customerId", res.data[0].userId);
+  //   //         sessionStorage.setItem("isAdmin", user ? true : false);
+  //   //         sessionStorage.setItem("jwt_token", res.data[0].token);
+  //   //         sessionStorage.setItem("jwt_refresh_token", res.data[0].refreshToken);
+  //   //         TokenRefresher(res.data[0].refreshToken);
+  //   //         props.setUserAuthenticatedStatus(user ? true : false, res.data[0].userId);
+  //   //       } else {
+  //   //         console.log("User not available");
+  //   //       }
+  //   //     })
+  //   //     .catch((err) => {
+  //   //       console.log(err);
+  //   //       console.log("error");
+  //   //     });
+  //   // }
+  // }
 
   // Function to validate email format
   function validateEmail(email) {
@@ -127,53 +171,93 @@ function Login(props) {
   function changePass(event) {
     setPass(event.target.value);
   }
-  const handleFind = () => {
+  const handleFind = async () => {
+    const { data, error } = await supabase
+      .from("Users")
+      .select("*")
+      .eq("Email", uname)
+      .eq("Password", password);
+
+    if (error) {
+      console.error("Supabase error:", error.message);
+      setError("Server error occurred.");
+      return;
+    }
+
+    if (data.length === 0) {
+      setError("Invalid credentials.");
+      return;
+    }
+    console.log(data, "--data:");
+    const user = data[0];
+    if (user.RoleID === 1) {
+      navigate("/super-admin");
+    } else if (user.RoleID === 2) {
+      navigate("/manager");
+    }
     // if (flightNumber === "123") {
     // window.location.reload(); // Refresh the page
     setError("");
-    navigate("/manager"); // Use navigate to redirect to the login page
+    // navigate("/manager"); // Use navigate to redirect to the login page
     dispatch(setUserAuth(true));
 
     // } else {
     //   setError("Invalid flight number!"); // Show error message
 
     // }
-  }
+  };
 
   const changeFlightNumber = (event) => {
     setFlightNumber(event.target.value);
-  }
+  };
 
   return (
     <>
-      <div className="login-container" style={{ paddingBottom: error ? '0px' : '22px' }}>
+      <div
+        className="login-container"
+        style={{ paddingBottom: error ? "0px" : "22px" }}
+      >
         <h1>LOG IN</h1>
-        {!nextStep &&
-          <p>Welcome back!</p>
-        }
-        {nextStep &&
-          <div style={{ marginTop: '20px', marginBottom: '45px' }}>
-            <p>Select your service location to manage drivers, vehicles, and schedules efficiently.</p>
+        {!nextStep && <p>Welcome back!</p>}
+        {nextStep && (
+          <div style={{ marginTop: "20px", marginBottom: "45px" }}>
+            <p>
+              Select your service location to manage drivers, vehicles, and
+              schedules efficiently.
+            </p>
           </div>
-        }
+        )}
 
-        {!nextStep &&
+        {!nextStep && (
           <>
-            <MDBInput wrapperClass='mb-4' label='User ID' id='form1' type='text' value={uname} onChange={changeName} />
-            <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' value={password} onChange={changePass} />
+            <MDBInput
+              wrapperClass="mb-4"
+              label="User ID"
+              id="form1"
+              type="text"
+              value={uname}
+              onChange={changeName}
+            />
+            <MDBInput
+              wrapperClass="mb-4"
+              label="Password"
+              id="form1"
+              type="password"
+              value={password}
+              onChange={changePass}
+            />
 
             {error && <div className="error-message">{error}</div>}
             <MDBBtn
-              className={`w-100 mb-4 ${error ? 'custom-btn' : ''}`}
-
-              size='md'
+              className={`w-100 mb-4 ${error ? "custom-btn" : ""}`}
+              size="md"
               onClick={handleClick}
             >
               Sign In
             </MDBBtn>
           </>
-        }
-        {nextStep &&
+        )}
+        {nextStep && (
           <>
             <MDBContainer className="location-dropdown">
               <select
@@ -181,9 +265,13 @@ function Login(props) {
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
               >
-                <option value="" disabled>Select Location</option>
+                <option value="" disabled>
+                  Select Location
+                </option>
                 {locations.map((location, index) => (
-                  <option key={index} value={location}>{location}</option>
+                  <option key={index} value={location}>
+                    {location}
+                  </option>
                 ))}
               </select>
             </MDBContainer>
@@ -191,13 +279,13 @@ function Login(props) {
             {error && <div className="error-message">{error}</div>}
             <MDBBtn
               className={`w-100 mb-68 ${error ? "mb-58" : ""}`}
-              size='md'
+              size="md"
               onClick={handleFind}
             >
               Continue
             </MDBBtn>
           </>
-        }
+        )}
         {/* <button className="green-blue-btn" onClick={handleClick}>Sign In</button> */}
         {/* <div className="register-link" onClick={() => props.navigateToRegisterPage()}>
           Is New User

@@ -12,6 +12,16 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isAuthenticated: action.payload,
       };
+    case "DRIVER_ID":
+      return {
+        ...state,
+        driverId: action.payload,
+      };
+    case "USER_ID":
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
       return state;
   }
