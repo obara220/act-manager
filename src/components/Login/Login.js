@@ -29,6 +29,7 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 
 function Login(props) {
   const dispatch = useDispatch(); // Initialize dispatch
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
   const [selectedLocation, setSelectedLocation] = useState("");
 
   const locations = ["New York", "Los Angeles", "Chicago", "Houston", "Miami"];
@@ -38,7 +39,6 @@ function Login(props) {
   let [error, setError] = useState("");
   const [flightNumber, setFlightNumber] = useState();
   const [nextStep, setNextStep] = useState(false);
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   let [isUserAuthenticated, setUserAuthorization] = useState(
     sessionStorage.getItem("isUserAuthenticated") === "true" || false
